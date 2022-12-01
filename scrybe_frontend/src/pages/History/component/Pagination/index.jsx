@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import classnames from "classnames";
 import { usePagination, DOTS } from "./usePagination";
+import { HistoryContext } from "../../Contexts/HistoryContext";
 import "./style.scss";
+
 const Pagination = (props) => {
+  const { setIsNext } = useContext(HistoryContext);
   const {
     onPageChange,
     totalCount,
@@ -23,13 +26,14 @@ const Pagination = (props) => {
     return null;
   }
 
-  const onNext = () => {
+  function onNext() {
     onPageChange(currentPage + 1);
-  };
+    setIsNext(true);
+  }
 
-  const onPrevious = () => {
+  function onPrevious() {
     onPageChange(currentPage - 1);
-  };
+  }
 
   let lastPage = paginationRange[paginationRange.length - 1];
   return (

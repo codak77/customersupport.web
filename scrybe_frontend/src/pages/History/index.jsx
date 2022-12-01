@@ -29,7 +29,7 @@ export default function History() {
   const [isGrid, setIsGrid] = useState(true);
   const [show, setShow] = useState(false);
   const [width, setWidth] = useState(window.innerWidth);
-
+  const [isNext, setIsNext] = useState(false);
   function handleClick() {
     setShow((prev) => !prev);
   }
@@ -118,9 +118,8 @@ export default function History() {
             </div>
           )}
         </div>
-        <HistoryContext.Provider
-          value={{ setIsGrid, setIsList, currHistoryData }}
-        >
+        <HistoryContext.Provider value={{ setIsGrid, setIsList, setIsNext }}>
+          {isNext && alert("Is Next")}
           <TitleSection />
           {isGrid && (
             <div className={styles.history__grids}>
@@ -228,16 +227,16 @@ export default function History() {
               </>
             )}
           </div>
+          <div className={styles.history__pagination}>
+            <Pagination
+              className="pagination-bar"
+              currentPage={currentPage}
+              totalCount={data.length}
+              pageSize={PageSize}
+              onPageChange={(page) => setCurrentPage(page)}
+            />
+          </div>
         </HistoryContext.Provider>
-        <div className={styles.history__pagination}>
-          <Pagination
-            className="pagination-bar"
-            currentPage={currentPage}
-            totalCount={data.length}
-            pageSize={PageSize}
-            onPageChange={(page) => setCurrentPage(page)}
-          />
-        </div>
       </div>
     </div>
   );
