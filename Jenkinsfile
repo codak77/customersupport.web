@@ -9,21 +9,21 @@ pipeline {
 
 			steps {
 				sh "cd scrybe_frontend"
-				sh "npm i --force && CI=false npm run build"
+				sh "cd scrybe_frontend && npm i --force && CI=false npm run build"
 			} 
                 } 
         	stage("build backend"){
 
 			steps {
 				sh "cd backend"
-				sh "cd app && pip3 install -r requirements.txt --force"
+				sh "cd backend/app && pip3 install -r requirements.txt --force"
 			} 
         	}
 		stage("deploy") {
 		
 			steps {
-				sh "sudo cp -rf backend /home/riches/heed/customersupport.web/backend/app"
-				sh "sudo cp -fr ${WORKSPACE}/scrybe_frontend/dist/* /home/riches/heed/customersupport.web/scrybe_frontend"
+				sh "sudo cp -rf ${WORKSPACE}/backend/app/* /home/riches/heed/backend"
+				sh "sudo cp -fr ${WORKSPACE}/scrybe_frontend/* /home/riches/heed/scrybe_frontend"
 				sh "sudo su - riches && whoami"
                                 sh "sudo pm2 stop heed"
 				sh "sudo pm2 stop heed_api"
